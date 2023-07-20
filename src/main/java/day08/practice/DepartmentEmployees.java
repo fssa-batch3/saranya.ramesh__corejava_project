@@ -3,46 +3,44 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
-
 public class DepartmentEmployees {
-
-	 public static void main(String[] args) {
-	        HashMap<String, List<String>> departmentEmployees = new HashMap<>();
-
-	        Scanner scanner = new Scanner(System.in);
-
-	        System.out.println("Enter the comma-separated Department Name and Employee Name (e.g., HR,Ram).");
-	        System.out.println("Enter 'done' to finish.");
-
-	        while (true) {
-	            String input = scanner.nextLine().trim();
-
-	            if (input.equalsIgnoreCase("done")) {
-	                break;
-	            }
-
-	            String[] values = input.split(",");
-	            String department = values[0].trim();
-	            String employee = values[1].trim();
-
-	            // Check if the department already exists in the HashMap
-	            if (departmentEmployees.containsKey(department)) {
-	                // Add the employee to the existing list
-	                List<String> employees = departmentEmployees.get(department);
-	                employees.add(employee);
-	            } else {
-	                // Create a new list and add the employee
-	                List<String> employees = new ArrayList<>();
-	                employees.add(employee);
-	                departmentEmployees.put(department, employees);
-	            }
-	        }
-
-	        // Output the Department Name along with the corresponding list of employees
-	        for (String department : departmentEmployees.keySet()) {
-	            List<String> employees = departmentEmployees.get(department);
-	            System.out.println(department + ": " + String.join(", ", employees));
-	        }
-	        scanner.close();
-	 }
+	
+	public static void main(String[] args) {
+		HashMap<String, List<String>> departmentEmployeesMap = new HashMap<>();
+		
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Enter the comma-separated department name and employee name pairs (e.g., HR,Ram):");
+		System.out.println("Type 'done' to finish input.");
+		
+		while (true) {
+			System.out.print("Input: ");
+			String input = scanner.nextLine();
+			if (input.equalsIgnoreCase("done")) {
+				break;
+			}
+			String[] values = input.split(",");
+			if (values.length != 2) {
+				System.out.println("Invalid input format. Please try again.");
+				continue;
+			}
+			String department = values[0].trim();
+			String employee = values[1].trim();
+			List<String> employees = departmentEmployeesMap.getOrDefault(department, new ArrayList<>());
+			employees.add(employee);
+			departmentEmployeesMap.put(department, employees);
+		}
+		 // Print department names and employees
+		System.out.println("\nOutput:");
+		for (String department : departmentEmployeesMap.keySet()) {
+			List<String> employees = departmentEmployeesMap.get(department);
+			System.out.print(department + ": ");
+			for (int i = 0; i < employees.size(); i++) {
+				if (i > 0) {
+					System.out.print(", ");
+				}
+				System.out.print(employees.get(i));
+			}
+			System.out.println();
+		}
+	}
 }

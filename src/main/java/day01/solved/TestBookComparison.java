@@ -4,7 +4,6 @@ class Movie {
 	public String title;
 	
 }
-
 public class TestBookComparison {
 	public static void main(String[] args) {
 		Movie movie1 = new Movie();

@@ -1,4 +1,5 @@
 package day01.solved;
+
 class Book {
 
 	public String title;
